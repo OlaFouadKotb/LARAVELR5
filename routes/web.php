@@ -6,10 +6,17 @@ use App\Http\Controllers\Mycontroller;
 use App\Http\Controllers\Clientcontroller;
 use App\Http\Controllers\Studentcontroller;
 
+Route::get('/',function(){
+    return view('welcome');
+});
+
 Route::post('insertStudent',[Studentcontroller::class, 'store'])->name('insertStudent');
 Route::get('addStudent',[Studentcontroller::class, 'create']);
+
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
-Route::get('addClient',[ClientController::class,'create']);
+Route::get('addClient',[ClientController::class,'create'])->name('addClient');
+Route::get('clients',[ClientController::class,'index'])->name('clients');
+//Route::get('addClient',[ClientController::class,'index'])->name('insertClient');
 // route ::get('Ola/{id?}',function($id=0){
 //     return "Welcome to MyWebsite" . $id;
 // })->whereNumber('id');
