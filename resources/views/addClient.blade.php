@@ -6,28 +6,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
 <body>
-  
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">clients</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="{{route('addClient')}}">ADD</a></li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""{{route('clients')}}"">Page 1 <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="{{route('clients')}}">Clients</a></li>
-          <li><a href="#">Page 1-2</a></li>
-          <li><a href="#">Page 1-3</a></li>
-        </ul>
-      </li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
-    </ul>
-  </div>
-</nav>
-
-<h2>HTML Forms</h2>
+ @include('includes.nav')
+<div class="container" style="margin: left 20px;">
+<h2>CILIENTS</h2>
 
 <form action="{{ route('insertClient') }}" method="POST">
 @csrf
@@ -41,8 +22,7 @@
   <input type="text" id="website" name="website" value=""><br><br> 
   <input type="submit" value="Submit">
 </form> 
-
-<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+</div>
 
 </body>
 </html>

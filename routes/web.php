@@ -5,13 +5,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Mycontroller;
 use App\Http\Controllers\Clientcontroller;
 use App\Http\Controllers\Studentcontroller;
+use App\Models\Student;
 
 Route::get('/',function(){
     return view('welcome');
 });
 
 Route::post('insertStudent',[Studentcontroller::class, 'store'])->name('insertStudent');
-Route::get('addStudent',[Studentcontroller::class, 'create']);
+Route::get('addStudent',[Studentcontroller::class, 'create'])->name('addStudent');
+Route::get('students',[StudentController::class,'index'])->name('students');
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
