@@ -8,15 +8,10 @@ use App\Models\Client;
 class Clientcontroller extends Controller
 {
    
-    private $columns=[
-        'clientName',
-        'phone',
-        'email',
-        'website'
-        ];
-    /**
-     * Display a listing of the resource.
-     */
+    private $columns=['clientName','phone','email','website'];
+    // /**
+    //  * Display a listing of the resource.
+    //  */
     public function index()
     {
         $clients = Client::get();
@@ -88,4 +83,31 @@ return view("clients", compact("clients"));
         Client::where('id', $id)->delete();
         return redirect('clients');
     }
+
+//trash 
+    public function trash()
+    {
+       
+        $trash=Client::onlyTrashed()->get();
+        return view('trashClient', compact('trash'));
+    }
+     /**
+     * RESTORE
+     */
+    public function restore(string $id)
+    {
+       
+        Client::where('id', $id)->restore();
+        return redirect('clients');
+    }
+     /**
+     *[Force Delete].
+     */
+    public function forceDelete(Request $request)
+    {
+        $id=$request->id;
+        Client::where('id', $id)->forceDelete();
+        return redirect('trashClient');
+    }
+
 }

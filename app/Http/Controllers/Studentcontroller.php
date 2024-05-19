@@ -82,4 +82,29 @@ class Studentcontroller extends Controller
         Student::where('id', $id)->delete();
         return redirect('students');
     }
+    //trash 
+    public function trash()
+    {
+       
+        $trash=Student::onlyTrashed()->get();
+        return view('trashStudent', compact('trash'));
+    }
+     /**
+     * RESTORE
+     */
+    public function restore(string $id)
+    {
+       
+        Student::where('id', $id)->restore();
+        return redirect('students');
+    }
+     /**
+     *[Force Delete].
+     */
+    public function forceDelete(Request $request)
+    {
+        $id=$request->id;
+        Student::where('id', $id)->forceDelete();
+        return redirect('trashStudent');
+    }
 }

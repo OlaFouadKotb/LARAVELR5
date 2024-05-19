@@ -10,7 +10,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""{{route('clients')}}"">Page 1 <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="{{route('clients')}}">Clients</a></li>
-          <li><a href="#">Page 1-2</a></li>
+          <li><a href="{{route('trashClient')}}">trash</a></li>
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>

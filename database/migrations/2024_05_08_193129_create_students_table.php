@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('studentName', 100);
-            $table->tinyInteger('age');  
+            $table->tinyInteger('age'); 
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

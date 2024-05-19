@@ -19,6 +19,9 @@ Route::get('editStudent/{id}',[StudentController::class,'edit'])->name('editStud
 Route::put('updateStudent/{id}',[StudentController::class,'update'])->name('updateStudent');
 Route::get('showStudent/{id}',[Studentcontroller::class, 'show'])->name('showStudent');
 Route::delete('delStudent',[Studentcontroller::class, 'destroy'])->name('delStudent');
+Route::get('trashStudent',[Studentcontroller::class,'trash'])->name('trashStudent');
+Route::get('restoreStudent/{id}',[Studentcontroller::class,'restore'])->name('restoreStudent');
+Route::delete('forceDeleteStudent',[Studentcontroller::class, 'forceDelete'])->name('forceDeleteStudent');
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
@@ -27,6 +30,9 @@ Route::get('editClient/{id}',[ClientController::class,'edit'])->name('editClient
 Route::put('updateClient/{id}',[ClientController::class,'update'])->name('updateClient');
 Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
 Route::delete('delClient',[Clientcontroller::class, 'destroy'])->name('delClient');
+Route::get('trashClient',[ClientController::class,'trash'])->name('trashClient');
+Route::get('restoreClient/{id}',[ClientController::class,'restore'])->name('restoreClient');
+Route::delete('forceDeleteClient',[Clientcontroller::class, 'forceDelete'])->name('forceDeleteClient');
 ////////////////////////////////////////////////////////////////////////////////////////
 //Route::get('addClient',[ClientController::class,'index'])->name('insertClient');
 // route ::get('Ola/{id?}',function($id=0){
