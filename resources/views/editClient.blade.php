@@ -14,14 +14,38 @@
 <form action="{{ route('updateClient',$client->id)}}" method="POST">
 @csrf
 @method('put')
-  <label for="clientname">clientName</label><br>
-  <input type="text" id="clientName" name="clientName" value="{{$client->clientName}}"><br>
-  <label for="lname">phone</label><br>
-  <input type="text" id="phone" name="phone" value="{{$client->phone}}"><br><br>
-  <label for="clientname">email</label><br>
-  <input type="text" id="email" name="email" value="{{$client->email}}"><br>
-  <label for="lname">website</label><br>
-  <input type="text" id="website" name="website" value="{{$client->website}}"><br><br> 
+
+<div>
+        <label for="clientName">Client Name:</label>
+        <input type="text" id="clientName" name="clientName" value="{{ old('clientName', $client->clientName ?? '') }}">
+        @error('clientName')
+            <div>{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="{{ old('phone', $client->phone ?? '') }}">
+        @error('phone')
+            <div>{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ old('email', $client->email ?? '') }}">
+        @error('email')
+            <div>{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div>
+        <label for="website">Website:</label>
+        <input type="url" id="website" name="website" value="{{ old('website', $client->website ?? '') }}">
+        @error('website')
+            <div>{{ $message }}</div>
+        @enderror
+    </div>
   <input type="submit" value="Submit">
 </form> 
 </div>

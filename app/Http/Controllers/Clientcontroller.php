@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 
-class Clientcontroller extends Controller
+class ClientController extends Controller
 {
-   
-    private $columns=['clientName','phone','email','website'];
-    // /**
-    //  * Display a listing of the resource.
-    //  */
+    private $columns = ['clientName', 'phone', 'email', 'website'];
+
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $clients = Client::get();
-return view("clients", compact("clients"));
+        $clients = Client::all();
+        return view("clients", compact("clients"));
     }
 
     /**
@@ -31,18 +31,15 @@ return view("clients", compact("clients"));
      */
     public function store(Request $request)
     {
-        // $client = new Client();
-        // $client->clientName = $request->clientName;
-        // $client->phone = $request->phone;
-        // $client->email = $request->email;
-        // $client->website = $request->website;
-        // $client->save();
-        // return 'Inserted Successfully';
-        
-        Client::create($request->only($this->columns));
+        $data = $request->validate([
+            'clientName' => 'required|string|min:10|max:100',
+            'phone' => 'required|string|min:11|max:15',
+            'email' => 'required|email:rfc,dns',
+            'website' => 'required|url',
+        ]);
+
+        Client::create($data);
         return redirect('clients');
-
-
     }
 
     /**
@@ -51,7 +48,7 @@ return view("clients", compact("clients"));
     public function show(string $id)
     {
         $client = Client::findOrFail($id);
-        return view('showClient', compact('client')); 
+        return view('showClient', compact('client'));
     }
 
     /**
@@ -61,7 +58,6 @@ return view("clients", compact("clients"));
     {
         $client = Client::findOrFail($id);
         return view('editClient', compact('client'));
-       
     }
 
     /**
@@ -69,9 +65,15 @@ return view("clients", compact("clients"));
      */
     public function update(Request $request, string $id)
     {
-        Client::where('id', $id)->update($request->only($this->columns));
+        $data = $request->validate([
+            'clientName' => 'required|string|min:10|max:100',
+            'phone' => 'required|string|min:11|max:15',
+            'email' => 'required|email:rfc,dns',
+            'website' => 'required|url',
+        ]);
+
+        Client::where('id', $id)->update($data);
         return redirect('clients');
-        
     }
 
     /**
@@ -79,35 +81,36 @@ return view("clients", compact("clients"));
      */
     public function destroy(Request $request)
     {
-        $id=$request->id;
+        $id = $request->id;
         Client::where('id', $id)->delete();
         return redirect('clients');
     }
 
-//trash 
+    /**
+     * Display the list of trashed resources.
+     */
     public function trash()
     {
-       
-        $trash=Client::onlyTrashed()->get();
+        $trash = Client::onlyTrashed()->get();
         return view('trashClient', compact('trash'));
     }
-     /**
-     * RESTORE
+
+    /**
+     * Restore the specified resource from trash.
      */
     public function restore(string $id)
     {
-       
-        Client::where('id', $id)->restore();
+        Client::withTrashed()->where('id', $id)->restore();
         return redirect('clients');
     }
-     /**
-     *[Force Delete].
+
+    /**
+     * Permanently delete the specified resource from storage.
      */
     public function forceDelete(Request $request)
     {
-        $id=$request->id;
-        Client::where('id', $id)->forceDelete();
+        $id = $request->id;
+        Client::withTrashed()->where('id', $id)->forceDelete();
         return redirect('trashClient');
     }
-
 }
