@@ -42,7 +42,7 @@ class Studentcontroller extends Controller
         // $student->save();
         // return 'inserted successfully';
         $data=$request->validate([
-            'studentName'=>'required|string|min:10|max:100',
+            'studentName'=>'required|string|min:6|max:50',
             'age'=> 'required|integer|min:2|max:40',
         ]);
         student::create($data);
@@ -73,7 +73,7 @@ class Studentcontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->validate([
+         $request->validate([
             'studentName' => 'required|string|min:10|max:70',
             'age' => 'required|integer|min:1|max:40',
         ]);

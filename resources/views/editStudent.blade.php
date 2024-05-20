@@ -28,7 +28,7 @@
             <div>{{ $message }}</div>
         @enderror
     </div>
-    
+    <input type="submit" value="Submit">
 </form> 
 
 </div>
