@@ -79,7 +79,7 @@ class ClientController extends Controller
         $messages = $this->errMsg();
     
         $data = $request->validate([
-            'clientName' => 'required|string|min:10|max:100',
+            'clientName' => 'required|string|min:3|max:100',
             'phone' => 'required|string|min:11|max:15',
             'email' => 'required|email:rfc,dns',
             'website' => 'required|url',
