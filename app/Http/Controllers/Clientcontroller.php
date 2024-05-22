@@ -38,7 +38,7 @@ class ClientController extends Controller
             'email' => 'required|email:rfc',
             'website' => 'required',
             'city' => 'required|max:30',
-            'image' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $messages);
 
         $imgExt = $request->image->getClientOriginalExtension();
@@ -74,31 +74,39 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $messages = $this->errMsg();
-    
-        $data = $request->validate([
-            'clientName' => 'required|string|min:3|max:100',
-            'phone' => 'required|string|min:11|max:15',
-            'email' => 'required|email:rfc,dns',
-            'website' => 'required|url',
-            'city' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], $messages);
-    
-        if ($request->hasFile('image')) {
-            $fileName = time() . '.' . $request->image->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs('assets/images', $fileName);
-            $data['image'] = $fileName;
+   
+public function update(Request $request, string $id)
+{
+    $data = $request->validate([
+        'clientName' => 'required|string|min:3|max:100',
+        'phone' => 'required|string|min:11|max:15',
+        'email' => 'required|email:rfc,dns',
+        'website' => 'required|url',
+        'city' => 'required|string|max:100',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    $client = Client::findOrFail($id);
+
+    if ($request->hasFile('image')) {
+        // Delete the old image if a new one is uploaded
+        if ($client->image) {
+            Storage::delete('assets/images/' . $client->image);
         }
-    
-        $data['active'] = $request->has('active');
-        Client::where('id', $id)->update($data);
-    
-        return redirect('clients');
+
+        // Upload new image
+        $imgExt = $request->image->getClientOriginalExtension();
+        $fileName = time() . '.' . $imgExt;
+        $path = 'assets/images';
+        $request->image->move($path, $fileName);
+
+        $data['image'] = $fileName;
     }
 
+    $client->update($data);
+
+    return redirect('clients')->with('success', 'Client updated successfully.');
+}
     /**
      * Display the list of trashed resources.
      */
@@ -152,7 +160,7 @@ class ClientController extends Controller
             'image.required' => 'An image is required',
             'image.image' => 'File must be an image',
             'image.mimes' => 'Image must be a type of: jpeg, png, jpg, gif, svg',
-            //'image.max' => 'Image size must be under 2MB',
+            'image.max' => 'Image size must be under 2MB',
         ];
     }
 }

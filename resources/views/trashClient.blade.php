@@ -37,8 +37,11 @@ tr:nth-child(even) {
     <td>phone</td>
     <td>email</td>
     <td>website</td>
+    <th>City</th>
+        <th>Active</th>
+        <th>Image</th>
     <td>restore</td>
-    <td>show</td>
+   
     <td>Delete</td>
   </tr>
 </thead>
@@ -49,8 +52,10 @@ tr:nth-child(even) {
 <td>{{ $client->phone}}</td>
 <td>{{ $client->email }}</td>
 <td>{{ $client->website}}</td>
+<td>{{ $client->city }}</td> <td>{{ $client->active ? 'Yes' : 'No' }}</td>
+<td>{{ $client->image }}</td>
 <td><a href="{{route('restoreClient',$client->id)}}">Restore</a></td>
-<td><a href="{{route('showClient',$client->id)}}">show</a></td>
+
 <td>
   <form action="{{route('forceDeleteClient')}}" method="post">
     @csrf

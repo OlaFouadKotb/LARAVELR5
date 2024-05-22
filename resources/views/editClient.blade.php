@@ -70,18 +70,18 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" id="image" name="image" class="form-control">
-                @error('image')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                @if ($client->image)
-                    <div class="current-image">
-                        <p>Current Image:</p>
-                        <img src="{{ asset('assets/images/' . $client->image) }}">
-                    </div>
-                @endif
-            </div>
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" class="form-control">
+    @error('image')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    @if ($client->image)
+        <div class="current-image">
+            <p>Current Image:</p>
+            <img src="{{ asset('assets/images/' . $client->image) }}">
+        </div>
+    @endif
+</div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
