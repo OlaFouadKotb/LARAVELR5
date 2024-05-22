@@ -33,7 +33,7 @@
             
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}">
+                <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}">
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -41,7 +41,7 @@
             
             <div class="form-group">
                 <label for="website">Website</label>
-                <input type="text" id="website" name="website" class="form-control" value="{{ old('website') }}">
+                <input type="url" id="website" name="website" class="form-control" value="{{ old('website') }}">
                 @error('website')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -61,12 +61,21 @@
             </div>
             
             <div class="form-group">
-                <label for="active">Active</label>
-                <input type="checkbox" id="active" name="active" class="form-control" {{ old('active') ? 'checked' : '' }}>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="active" name="active" {{ old('active') ? 'checked' : '' }}> Active
+                    </label>
+                </div>
             </div>
             
             <div class="form-group">
                 <label for="image">Image</label>
+                @if(isset($client) && $client->image)
+                    <div>
+                        <p>Current Image:</p>
+                        <img src="{{ asset('assets/images/' . $client->image) }}">
+                    </div>
+                @endif
                 <input type="file" id="image" name="image" class="form-control">
             </div>
             

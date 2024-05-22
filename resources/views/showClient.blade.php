@@ -14,9 +14,13 @@
     <hr>
     <h1><strong>website:</strong>{{$client->website}}</h1>
     <hr>
+    <hr>
+    <h1><strong>city:</strong>{{$client->city}}</h1>
+    <hr>
+    <h1><strong>active:</strong>{{ $client->active ? 'Yes' : 'No' }}</h1>
     <td>
   
-      <p><img src="{{asset('assets/images/'.$client->image) }}" alt="{{ $client->clientName }}" width="100">
+      <p><img src="{{asset('assets/images/'.$client->image) }}"  width="100">
    </p>  
 </td>
 </body>

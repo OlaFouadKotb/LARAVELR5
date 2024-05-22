@@ -62,8 +62,11 @@
             </div>
 
             <div class="form-group">
-                <label for="active">Active:</label>
-                <input type="checkbox" id="active" name="active" class="form-control" {{ old('active', $client->active) ? 'checked' : '' }}>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="active" name="active" {{ old('active', $client->active) ? 'checked' : '' }}> Active
+                    </label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -73,7 +76,10 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 @if ($client->image)
-                    <p>Current Image: <img src="{{ asset('assets/images/' . $client->image) }}" style="max-width: 200px;" alt="Current Image"></p>
+                    <div class="current-image">
+                        <p>Current Image:</p>
+                        <img src="{{ asset('assets/images/' . $client->image) }}">
+                    </div>
                 @endif
             </div>
 
