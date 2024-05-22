@@ -18,7 +18,7 @@
             
             <div class="form-group">
                 <label for="clientName">Client Name:</label>
-                <input type="text" id="clientName" name="clientName" class="form-control" value="{{ old('clientName', $client->clientName) }}">
+                <input type="text" id="clientName" name="clientName" value="{{ old('clientName', $client->clientName) }}" class="form-control">
                 @error('clientName')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone', $client->phone) }}">
+                <input type="text" id="phone" name="phone" value="{{ old('phone', $client->phone) }}" class="form-control">
                 @error('phone')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $client->email) }}">
+                <input type="email" id="email" name="email" value="{{ old('email', $client->email) }}" class="form-control">
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -42,10 +42,28 @@
 
             <div class="form-group">
                 <label for="website">Website:</label>
-                <input type="url" id="website" name="website" class="form-control" value="{{ old('website', $client->website) }}">
+                <input type="url" id="website" name="website" value="{{ old('website', $client->website) }}" class="form-control">
                 @error('website')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <select name="city" id="city" class="form-control">
+                    <option value="">Please Select City</option>
+                    <option value="Cairo" {{ old('city', $client->city) == 'Cairo' ? 'selected' : '' }}>Cairo</option>
+                    <option value="Giza" {{ old('city', $client->city) == 'Giza' ? 'selected' : '' }}>Giza</option>
+                    <option value="Alex" {{ old('city', $client->city) == 'Alex' ? 'selected' : '' }}>Alex</option>
+                </select>
+                @error('city')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="active">Active:</label>
+                <input type="checkbox" id="active" name="active" class="form-control" {{ old('active', $client->active) ? 'checked' : '' }}>
             </div>
 
             <div class="form-group">
@@ -58,10 +76,9 @@
                     <p>Current Image: <img src="{{ asset('assets/images/' . $client->image) }}" style="max-width: 200px;" alt="Current Image"></p>
                 @endif
             </div>
-            
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
 </body>
 </html>
