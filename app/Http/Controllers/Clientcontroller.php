@@ -7,7 +7,7 @@ use App\Models\Client;
 
 class ClientController extends Controller
 {
-    private $columns = ['clientName', 'phone', 'email', 'website'];
+    //private $columns = ['clientName', 'phone', 'email', 'website'];
 
     /**
      * Display a listing of the resource.
@@ -31,13 +31,23 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        $messages=$this->errMsg();
+         //return dd($request->all());
         $data = $request->validate([
             'clientName' => 'required|string|min:10|max:100',
             'phone' => 'required|string|min:11|max:15',
             'email' => 'required|email:rfc,dns',
             'website' => 'required|url',
-        ]);
+            'city' => 'required',
+            'image' => 'required',
+        ],$messages);
+        $imgExt = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $imgExt;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        $data['image']=$file_name;
 
+        $data['active']=isset($request->active);
         Client::create($data);
         return redirect('clients');
     }
@@ -65,14 +75,29 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages = $this->errMsg();
+    
+        // Validate the incoming request data, including image
         $data = $request->validate([
             'clientName' => 'required|string|min:10|max:100',
             'phone' => 'required|string|min:11|max:15',
             'email' => 'required|email:rfc,dns',
             'website' => 'required|url',
-        ]);
-
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Allow nullable image
+        ], $messages);
+    
+        // Check if image file is present in the request
+        if ($request->hasFile('image')) {
+            $imgExt = $request->image->getClientOriginalExtension();
+            $file_name = time() . '.' . $imgExt;
+            $path = 'assets/images';
+            $request->image->move($path, $file_name);
+            $data['image'] = $file_name;
+        }
+    
+        // Update client record in the database
         Client::where('id', $id)->update($data);
+    
         return redirect('clients');
     }
 
@@ -113,4 +138,14 @@ class ClientController extends Controller
         Client::withTrashed()->where('id', $id)->forceDelete();
         return redirect('trashClient');
     }
+    // error custom message
+    public function errMsg()
+    {
+        return[
+            'clientName.required'=>'The Client Name is required',
+            'clientName.alpha'=>'Should be letters',
+            'clientName.min'=> 'should be more than or equal 10 letters',
+            ];
+    }
+    
 }

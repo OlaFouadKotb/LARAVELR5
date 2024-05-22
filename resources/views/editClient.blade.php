@@ -1,54 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <title>Edit Client</title>
-  </head>
+<head>
+    <title>Edit Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 <body>
- @include('includes.nav')
-<div class="container" style="margin: left 20px;">
-<h2> EDIT CILIENTS</h2>
+    @include('includes.nav')
 
-<form action="{{ route('updateClient',$client->id)}}" method="POST">
-@csrf
-@method('put')
+    <div class="container" style="margin-left: 20px;">
+        <h2>Edit Client</h2>
 
-<div>
-        <label for="clientName">Client Name:</label>
-        <input type="text" id="clientName" name="clientName" value="{{ old('clientName', $client->clientName ?? '') }}">
-        @error('clientName')
-            <div>{{ $message }}</div>
-        @enderror
+        <form action="{{ route('updateClient', $client->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            
+            <div class="form-group">
+                <label for="clientName">Client Name:</label>
+                <input type="text" id="clientName" name="clientName" class="form-control" value="{{ old('clientName', $client->clientName) }}">
+                @error('clientName')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone', $client->phone) }}">
+                @error('phone')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $client->email) }}">
+                @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website:</label>
+                <input type="url" id="website" name="website" class="form-control" value="{{ old('website', $client->website) }}">
+                @error('website')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" class="form-control">
+                @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                @if ($client->image)
+                    <p>Current Image: <img src="{{ asset('assets/images/' . $client->image) }}" style="max-width: 200px;" alt="Current Image"></p>
+                @endif
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-
-    <div>
-        <label for="phone">Phone:</label>
-        <input type="text" id="phone" name="phone" value="{{ old('phone', $client->phone ?? '') }}">
-        @error('phone')
-            <div>{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ old('email', $client->email ?? '') }}">
-        @error('email')
-            <div>{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div>
-        <label for="website">Website:</label>
-        <input type="url" id="website" name="website" value="{{ old('website', $client->website ?? '') }}">
-        @error('website')
-            <div>{{ $message }}</div>
-        @enderror
-    </div>
-  <input type="submit" value="Submit">
-</form> 
-</div>
 
 </body>
 </html>

@@ -14,5 +14,10 @@
     <hr>
     <h1><strong>website:</strong>{{$client->website}}</h1>
     <hr>
+    <td>
+  
+      <p><img src="{{asset('assets/images/'.$client->image) }}" alt="{{ $client->clientName }}" width="100">
+   </p>  
+</td>
 </body>
 </html>
