@@ -3,10 +3,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Traits\Traits\UploadFile as TraitsUploadFile;
 use Illuminate\Support\Facades\Storage;
-
+use App\Traits\Traits\UploadFile;
 class ClientController extends Controller
 {
+    use UploadFile;
     /**
      * Display a listing of the resource.
      */
@@ -41,12 +43,12 @@ class ClientController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $messages);
 
-        $imgExt = $request->image->getClientOriginalExtension();
-        $fileName = time() . '.' . $imgExt;
-        $path = 'assets/images';
-        $request->image->move($path, $fileName);
-
-        $data['image'] = $fileName;
+        // $imgExt = $request->image->getClientOriginalExtension();
+        // $fileName = time() . '.' . $imgExt;
+        // $path = 'assets/images';
+        // $request->image->move($path, $fileName);
+  $fileName= $this->upload($request->image,'assets/images');
+        $data['image'] =$fileName;
 
         $data['active'] = isset($request->active);
         Client::create($data);
@@ -95,10 +97,11 @@ public function update(Request $request, string $id)
         }
 
         // Upload new image
-        $imgExt = $request->image->getClientOriginalExtension();
-        $fileName = time() . '.' . $imgExt;
-        $path = 'assets/images';
-        $request->image->move($path, $fileName);
+        $fileName= $this->upload($request->image,'assets/images');
+        // $imgExt = $request->image->getClientOriginalExtension();
+        // $fileName = time() . '.' . $imgExt;
+        // $path = 'assets/images';
+        // $request->image->move($path, $fileName);
 
         $data['image'] = $fileName;
     }
