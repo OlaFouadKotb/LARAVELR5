@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Client;
 
-class DatabaseSeeder extends Seeder
+class ClientsTableSeeder extends Seeder
 {
     public function run()
     {
-        $this->call(ClientsTableSeeder::class);
+        Client::factory()->count(50)->create();
     }
 }
